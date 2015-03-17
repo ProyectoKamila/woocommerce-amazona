@@ -68,7 +68,8 @@ $order = wc_get_order( $order_id );
 							?>
 						</td>
 						<td class="product-total">
-							<?php echo $order->get_formatted_line_subtotal( $item ); ?>
+							<?php // echo $order->get_formatted_line_subtotal( $item ); ?>
+							<?php echo select_divisa('Bs.',$order->get_line_subtotal( $item )); ?>
 						</td>
 					</tr>
 					<?php
@@ -94,8 +95,10 @@ $order = wc_get_order( $order_id );
 		if ( $total_refunded = $order->get_total_refunded() ) {
 			$has_refund = true;
 		}
-
+                $pk_desastive = false;
+                if($pk_desastive!=true){
 		if ( $totals = $order->get_order_item_totals() ) {
+//                    debug($totals);
 			foreach ( $totals as $key => $total ) {
 				$value = $total['value'];
 
@@ -133,14 +136,16 @@ $order = wc_get_order( $order_id );
 
 					$value = '<del>' . strip_tags( $order->get_formatted_order_total() ) . $refunded_tax_del . '</del> <ins>' . wc_price( $order->get_total() - $total_refunded, array( 'currency' => $order->get_order_currency() ) ) . $refunded_tax_ins . '</ins>';
 				}
+//                                debug($refunded_tax_ins);
 				?>
 				<tr>
 					<th scope="row"><?php echo $total['label']; ?></th>
 					<td><?php echo $value; ?></td>
-				</tr>
+                                        <?php // echo select_divisa('Bs.',$order->get_line_subtotal( $item )); ?>
 				<?php
 			}
 		}
+                }
 
 		// Check for refund
 		if ( $has_refund ) { ?>

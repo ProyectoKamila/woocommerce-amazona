@@ -1539,7 +1539,8 @@ abstract class WC_Abstract_Order {
 	 * @return string
 	 */
 	public function get_formatted_order_total() {
-		$formatted_total = wc_price( $this->get_total(), array( 'currency' => $this->get_order_currency() ) );
+//		$formatted_total = wc_price( $this->get_total(), array( 'currency' => $this->get_order_currency() ) );
+		$formatted_total = select_divisa('Bs.',$this->get_total());
 
 		return apply_filters( 'woocommerce_get_formatted_order_total', $formatted_total, $this );
 	}
@@ -1574,7 +1575,8 @@ abstract class WC_Abstract_Order {
 				}
 			}
 
-			$subtotal = wc_price( $subtotal, array('currency' => $this->get_order_currency()) );
+//			$subtotal = wc_price( $subtotal, array('currency' => $this->get_order_currency()) );
+			$subtotal = select_divisa('Bs.',$subtotal);
 
 			if ( $tax_display == 'excl' && $this->prices_include_tax ) {
 				$subtotal .= ' <small>' . WC()->countries->ex_tax_or_vat() . '</small>';

@@ -2057,14 +2057,14 @@ class WC_Cart {
 
 			$price 			= $_product->get_price();
 			$taxable 		= $_product->is_taxable();
-
 			// Taxable
+//                        producto simple
 			if ( $taxable ) {
-
 				if ( $this->tax_display_cart == 'excl' ) {
 
 					$row_price        = $_product->get_price_excluding_tax( $quantity );
-					$product_subtotal = wc_price( $row_price );
+//					$product_subtotal = wc_price( $row_price );
+                                        $product_subtotal = select_divisa('Bs.',$row_price);
 
 					if ( $this->prices_include_tax && $this->tax_total > 0 ) {
 						$product_subtotal .= ' <small class="tax_label">' . WC()->countries->ex_tax_or_vat() . '</small>';
@@ -2074,18 +2074,23 @@ class WC_Cart {
 
 					$row_price        = $_product->get_price_including_tax( $quantity );
 					$product_subtotal = wc_price( $row_price );
+                                        $product_subtotal = select_divisa('Bs.',$row_price);
 
 					if ( ! $this->prices_include_tax && $this->tax_total > 0 ) {
 						$product_subtotal .= ' <small class="tax_label">' . WC()->countries->inc_tax_or_vat() . '</small>';
 					}
+                                        
+                                        
 
 				}
 
 			// Non-taxable
+//                                producto multible
 			} else {
 
 				$row_price        = $price * $quantity;
-				$product_subtotal = wc_price( $row_price );
+//				$product_subtotal = wc_price( $row_price );
+				$product_subtotal = '<span class="amount">'.select_divisa('Bs.',$row_price).'</span>';
 
 			}
 

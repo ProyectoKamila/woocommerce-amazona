@@ -348,6 +348,7 @@ class WC_Checkout {
 	 */
 	public function process_checkout() {
 		try {
+            
 			if ( empty( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'woocommerce-process_checkout' ) ) {
 				WC()->session->set( 'refresh_totals', true );
 				throw new Exception( __( 'We were unable to process your order, please try again.', 'woocommerce' ) );
@@ -582,7 +583,7 @@ class WC_Checkout {
 			}
 
 			// Action after validation
-			do_action( 'woocommerce_after_checkout_validation', $this->posted );
+//			do_action( 'woocommerce_after_checkout_validation', $this->posted );
 
 			if ( ! isset( $_POST['woocommerce_checkout_update_totals'] ) && wc_notice_count( 'error' ) == 0 ) {
 
@@ -631,10 +632,11 @@ class WC_Checkout {
 				$order_id = $this->create_order();
 
 				if ( is_wp_error( $order_id ) ) {
+                                   
 					throw new Exception( $order_id->get_error_message() );
 				}
 
-				do_action( 'woocommerce_checkout_order_processed', $order_id, $this->posted );
+//				do_action( 'woocommerce_checkout_order_processed', $order_id, $this->posted );
 
 				// Process payment
 				if ( WC()->cart->needs_payment() ) {
